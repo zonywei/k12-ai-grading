@@ -31,15 +31,30 @@ function destination(endpoint) {
 export function sharingStatus(home, endpoint) {
   const state = maybe(stateFile(home)),
     config = maybe(configFile(home));
-  const target = destination(
-    endpoint || config.endpoint || communityService.endpoint,
-  );
+  let target,
+    invalidEndpoint = false;
+  try {
+    target = destination(
+      endpoint || config.endpoint || communityService.endpoint,
+    );
+  } catch (error) {
+    if (endpoint) throw error;
+    target = communityService.endpoint;
+    invalidEndpoint = true;
+  }
   const current =
     state.notice_version === communityService.notice_version &&
     state.endpoint === target;
   return {
     choice: state.choice || "unasked",
-    enabled: current && state.choice === "enabled" && config.enabled === true,
+    enabled:
+      !invalidEndpoint &&
+      current &&
+      state.choice === "enabled" &&
+      config.enabled === true,
+    configuration_warning: invalidEndpoint
+      ? "上传地址配置有误，已停止共享；阅卷可继续，由智能体修复配置。"
+      : "",
     revision: state.revision || 0,
     notice_version: communityService.notice_version,
     endpoint: target,

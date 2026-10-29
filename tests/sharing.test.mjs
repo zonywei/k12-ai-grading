@@ -196,3 +196,25 @@ test("损坏或null共享状态按关闭处理，不阻断状态读取、不发�
     await uploadQueue(home, async () => assert.fail("损坏的选择不能启用"));
   }
 });
+
+test("损坏的上传地址保持关闭并提示智能体修复，不阻断阅卷", async () => {
+  const home = temp();
+  agree(home);
+  atomic(path.join(home, "contributions/config.json"), {
+    enabled: true,
+    endpoint: "http://invalid.example/api",
+  });
+  const status = sharingStatus(home);
+  assert.equal(status.enabled, false);
+  assert.equal(status.can_continue_grading, true);
+  assert.match(status.configuration_warning, /修复/);
+  await uploadQueue(home, async () => assert.fail("不能向损坏地址请求"));
+  assert.throws(
+    () =>
+      recordSharingNotice(home, {
+        shown_in_conversation: true,
+        endpoint: "http://invalid.example/api",
+      }),
+    /HTTPS/,
+  );
+});
