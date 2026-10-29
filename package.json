@@ -1,0 +1,16 @@
+{
+  "name": "k12-ai-grading",
+  "version": "3.3.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node --test tests/browser.test.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.64.1"
+  }
+}

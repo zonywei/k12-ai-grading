@@ -1,0 +1,8 @@
+{
+  "endpoint": "https://grading.zonywei.com/api/v1/contributions",
+  "website": "https://grading.zonywei.com/",
+  "privacy_url": "https://grading.zonywei.com/privacy",
+  "repository": "https://github.com/zonywei/k12-ai-grading",
+  "notice_version": "2026-10-29-v1",
+  "scope": "controlled-generic-rules-only"
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "task_id": "synthetic-task",
+  "qid": "Q9",
+  "version": "1.0.0",
+  "kind": "short_answer",
+  "question": "合成示例：结合给定秋景材料，分析借景抒情的手法及悲凉情感。满分4分。",
+  "reference_answer": "借景抒情；结合秋雨等具体景物，表现悲凉的情绪。",
+  "max_score": 4,
+  "step": 1,
+  "teacher_rules": [
+    "意思相同可给分，必须结合材料判断。"
+  ],
+  "points": [
+    {
+      "id": "method",
+      "max": 2,
+      "description": "正确判断借景抒情，并结合材料说明景情关系；仅术语可按本题补充口径给1分。",
+      "source": "agent",
+      "alternatives": [
+        "寓情于景",
+        "以景写情"
+      ]
+    },
+    {
+      "id": "emotion",
+      "max": 2,
+      "description": "结合材料准确分析悲凉情感；仅写情感词可按本题口径给1分。",
+      "source": "agent"
+    }
+  ],
+  "workflow_version": 3,
+  "default_rules_required": true
+}

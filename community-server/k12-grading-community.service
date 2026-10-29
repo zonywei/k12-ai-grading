@@ -1,0 +1,31 @@
+[Unit]
+Description=K12 grading voluntary community intake
+After=network.target
+
+[Service]
+Type=simple
+User=k12-grading
+Group=k12-grading
+WorkingDirectory=/srv/k12-grading-community/current
+ExecStart=/usr/bin/python3 community-server/server.py --db /var/lib/k12-grading-community/contributions.sqlite --downloads /srv/k12-grading-community/downloads
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/k12-grading-community
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryMax=192M
+CPUQuota=25%
+TasksMax=32
+LimitNOFILE=256
+
+[Install]
+WantedBy=multi-user.target

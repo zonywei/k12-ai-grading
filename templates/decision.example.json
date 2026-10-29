@@ -1,0 +1,72 @@
+{
+  "task_id": "synthetic-task",
+  "paper_id": "synthetic-paper-1",
+  "answer_hash": "由read返回",
+  "rubric_hash": "由rubric返回",
+  "awards": [
+    {
+      "point_id": "model",
+      "score": 1,
+      "reason": "仅为合成格式示例：实际评分须逐点核对当前作答。",
+      "evidence": {
+        "type": "text",
+        "quote": "F=ma，a=3 m/s²，v=at=12 m/s"
+      }
+    },
+    {
+      "point_id": "acceleration",
+      "score": 1,
+      "reason": "仅为合成格式示例：实际评分须逐点核对当前作答。",
+      "evidence": {
+        "type": "text",
+        "quote": "F=ma，a=3 m/s²，v=at=12 m/s"
+      }
+    },
+    {
+      "point_id": "velocity_method",
+      "score": 1,
+      "reason": "仅为合成格式示例：实际评分须逐点核对当前作答。",
+      "evidence": {
+        "type": "text",
+        "quote": "F=ma，a=3 m/s²，v=at=12 m/s"
+      }
+    },
+    {
+      "point_id": "velocity_result",
+      "score": 1,
+      "reason": "仅为合成格式示例：实际评分须逐点核对当前作答。",
+      "evidence": {
+        "type": "text",
+        "quote": "F=ma，a=3 m/s²，v=at=12 m/s"
+      }
+    }
+  ],
+  "deductions": [],
+  "applied_caps": [],
+  "review": {
+    "required": false,
+    "reasons": []
+  },
+  "status": "ready",
+  "self_check": {
+    "negation": true,
+    "context": true,
+    "duplicates": true,
+    "rules": true
+  },
+  "summary": "明确对象与合力，建模、运算及单位一致。",
+  "learning": {
+    "judgment": "本题能把合力关系与运动关系衔接。",
+    "action": "补做一道初速度不为零的同结构题，标出初态与末态。",
+    "check": "核对是否根据初态写v=v₀+at，并写清单位。",
+    "point_ids": [
+      "model",
+      "velocity_method"
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "reasons": [],
+    "affected_points": []
+  }
+}

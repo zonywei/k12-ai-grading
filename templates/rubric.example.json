@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "workflow_version": 3,
+  "task_id": "synthetic-task",
+  "qid": "Q1",
+  "version": "1",
+  "kind": "calculation",
+  "question": "合成示例：质量2 kg的物体在水平无摩擦面上，受6 N水平恒力，从静止运动4 s，求加速度与末速度。",
+  "reference_answer": "a=F/m=3 m/s²；v=at=12 m/s。",
+  "max_score": 4,
+  "step": 1,
+  "points": [
+    {
+      "id": "model",
+      "max": 1,
+      "description": "明确研究对象与水平合力，使用牛顿第二定律",
+      "source": "agent"
+    },
+    {
+      "id": "acceleration",
+      "max": 1,
+      "description": "正确代入并求得加速度及单位",
+      "source": "agent"
+    },
+    {
+      "id": "velocity_method",
+      "max": 1,
+      "description": "基于静止开始且加速度恒定，使用v=at",
+      "source": "agent"
+    },
+    {
+      "id": "velocity_result",
+      "max": 1,
+      "description": "末速度12 m/s，结论与过程一致",
+      "source": "agent"
+    }
+  ],
+  "groups": [],
+  "deduction_rules": [],
+  "cap_rules": [],
+  "teacher_rules": [
+    "本题满分4分"
+  ],
+  "source_notes": "教师仅提供满分。作答内容依据参考答案，原子分值及部分分条件由agent结合内置物理通用原则拟定，已告知教师。",
+  "default_rules_required": true
+}

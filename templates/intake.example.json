@@ -1,0 +1,21 @@
+{
+  "task_id": "synthetic-task",
+  "subject": "physics",
+  "stage": "high",
+  "question_clear": true,
+  "reference_clear": true,
+  "rules_clear": true,
+  "reference_origin": "teacher",
+  "rubric_mode": "teacher-completed",
+  "mode": "writeback",
+  "scope": {
+    "label": "教师授权的当前题目待阅范围",
+    "expected_papers": 1,
+    "platform_count_reconciled": false
+  },
+  "unresolved": [],
+  "teacher_rubric_checked": true,
+  "teacher_rubric_status": "partial",
+  "agent_organization_notified": true,
+  "rubric_generation_notice": "您目前提供的是本题总分4分。我会保留该要求，依据内置物理通用评分原则和参考答案拟定其余采分点、分值与部分分条件。"
+}

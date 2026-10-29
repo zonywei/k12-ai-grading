@@ -1,0 +1,26 @@
+{
+  "observed_evidence": "仅结构示例，不是智学网真实定位。智能体须替换为本次实际页面与接口观察。",
+  "task_id": { "selector": "#task", "attr": "data-task-id" },
+  "paper_id": { "selector": "#paper", "attr": "data-paper-id" },
+  "qid": { "selector": "#qid" },
+  "max_score": { "selector": "#max" },
+  "step": { "selector": "#step" },
+  "status": { "selector": "#state" },
+  "pending_value": "待评",
+  "answer": { "selector": "#answer" },
+  "score_input": { "selector": "#score" },
+  "submit": { "selector": "#save" },
+  "submit_semantics": "save-current",
+  "receipt": {
+    "kind": "backend",
+    "observed_evidence": "仅本地测试示意：此GET读取已持久保存的单卷分数，不是通用成功码。",
+    "url_template": "http://127.0.0.1:PORT/saved?paper={paper_id}&task={task_id}",
+    "fields": {
+      "task_id": "task_id",
+      "paper_id": "paper_id",
+      "score": "score",
+      "saved": "saved"
+    },
+    "saved_value": true
+  }
+}

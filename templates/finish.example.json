@@ -1,0 +1,48 @@
+{
+  "analysis": {
+    "insights": [
+      {
+        "finding": "合成示例：已有对象与两种关系式的清晰衔接。",
+        "action": "用一个初速度变化的对比题检查条件迁移。",
+        "check": "检查是否补入初速度项，不能只换数字。",
+        "evidence_papers": ["synthetic-paper-1"]
+      }
+    ],
+    "representatives": [
+      {
+        "category": "excellent",
+        "paper_id": "synthetic-paper-1",
+        "reason": "合成示例：展示从受力到运动关系的衔接。"
+      }
+    ]
+  },
+  "reflection": {
+    "worked": ["合成示例：逐点证据与统一核算闭合。"],
+    "mistakes": [],
+    "teacher_reminders": [],
+    "next_actions": ["下次用含初速度的合成题检查条件意识。"],
+    "lessons": [
+      {
+        "origin": "agent",
+        "lesson": "评分前先核对公式所绑定的对象与初态。",
+        "scope": {
+          "subject": "physics",
+          "stage": "high",
+          "kind": "calculation"
+        },
+        "evidence_papers": ["synthetic-paper-1"],
+        "reuse_explicit": false
+      }
+    ]
+  },
+  "contribution": {
+    "subject": "physics",
+    "stage": "high",
+    "improvements": [
+      {
+        "code": "verify-model-before-algebra",
+        "synthetic_check": "wrong-model"
+      }
+    ]
+  }
+}

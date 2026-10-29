@@ -1,0 +1,2034 @@
+{
+  "schema_version": 1,
+  "version": "1.2.0",
+  "updated": "2026-10-29",
+  "activation": "always-load-subject-and-stage; conditional-application-per-rule",
+  "authority_notice": "本库是学科阅卷操作性归纳，结合用户工作流及公开课程、考试和评价资料；不是全国统一逐题评分细则。课程框架、国外参考与AI归纳分别标注。",
+  "merge_policy": {
+    "default": "retain-unmentioned-rules",
+    "override": "specific-rule-only-with-current-teacher-or-current-exam-evidence",
+    "weights": "no-global-fixed-deductions",
+    "freeze": "freeze-effective-profile-before-scoring"
+  },
+  "bands": [
+    {
+      "id": "primary",
+      "name": "小学（通用）",
+      "stage": "primary",
+      "grade_min": null,
+      "grade_max": null
+    },
+    {
+      "id": "primary-1-2",
+      "name": "小学1—2年级",
+      "grade_min": 1,
+      "grade_max": 2,
+      "stage": "primary"
+    },
+    {
+      "id": "primary-3-4",
+      "name": "小学3—4年级",
+      "grade_min": 3,
+      "grade_max": 4,
+      "stage": "primary"
+    },
+    {
+      "id": "primary-5-6",
+      "name": "小学5—6年级",
+      "grade_min": 5,
+      "grade_max": 6,
+      "stage": "primary"
+    },
+    {
+      "id": "middle",
+      "name": "初中",
+      "grade_min": 7,
+      "grade_max": 9,
+      "stage": "middle"
+    },
+    {
+      "id": "high",
+      "name": "高中",
+      "grade_min": 10,
+      "grade_max": 12,
+      "stage": "high"
+    }
+  ],
+  "common_rules": [
+    {
+      "id": "common-target",
+      "title": "先确定本题评价目标",
+      "when": "每一题",
+      "principle": "先识别本题评的是结果、理解、过程、表达还是实作，再选择适用条款。默认原则每题都加载，但条件不满足的条款不强加为采分要求。选择、填空默认按所问结果评判；未要求过程时，不因没有写解题过程另扣分。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-merge",
+      "title": "细则采用条款合并",
+      "when": "每一题",
+      "principle": "本学科默认原则持续生效，教师或本次正式细则的明确要求只覆盖对应冲突条款。教师只给总分、未列单位或未提等价解法，不表示取消其余默认原则；教师称细则完整也不整套关闭默认原则。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-evidence",
+      "title": "分数来自可见证据",
+      "when": "每一份答卷",
+      "principle": "只据本卷可见作答评价；结合上下文辨别否定、条件、对象、划改和跨小问引用。学生姓名、历史成绩、预期能力和涉嫌抄袭均不能替代本卷证据或决定本题分数。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-independent",
+      "title": "区分独立与依赖",
+      "when": "本题含多个采分目标时",
+      "principle": "独立正确内容保留；依赖错误前提的部分按学科规则判断是否仍有独立价值，不一错全错，也不一律沿错给分。不能重复给同一目标分或把无关正确知识凑成得分。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-equivalent",
+      "title": "认可目标等价",
+      "when": "本题未要求唯一写法时",
+      "principle": "判断是否达到相同学科目标，接受正确的替代表达、方法和合理顺序；精确字词、指定格式、对象或方法本身是评价目标时按该目标判断。参考答案只给一种写法不等于排斥其他正确答案。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-weights",
+      "title": "补拟分值须明确来源",
+      "when": "教师只有总分或部分条件时",
+      "principle": "先保留教师分值和明确要求，再据本题目标组织采分点、部分分、依赖和分值，标为agent并告知教师。定稿在阅卷前完成；不发明全国统一的错一字扣多少、缺单位扣多少、作文封顶或容差。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-review",
+      "title": "证据不足进入复核",
+      "when": "字迹、图表、语义或计分口径影响分数时",
+      "principle": "先重读、放大或重取原始证据，仍低置信度则独立复核、主智能体终审；不把看不清当作答错，不用零分代替待复核，不把平台未确认保存当作尚未判分。",
+      "authority": "operational-synthesis"
+    },
+    {
+      "id": "common-stability",
+      "title": "口径先定后统一",
+      "when": "批量评分及教师中途修订时",
+      "principle": "同一规则同一口径；修改影响分数的条款须形成新版细则，定位受影响答卷并按授权范围复核，不能只改后半批，也不能为迎合均分或分布改个体分。",
+      "authority": "operational-synthesis"
+    }
+  ],
+  "subjects": {
+    "chinese": {
+      "name": "语文",
+      "aliases": [
+        "语文",
+        "中文"
+      ],
+      "sources": [
+        "CN-COMP-2022",
+        "CN-HIGH-2020",
+        "CN-CHINESE-2025",
+        "LOCAL-CHINESE"
+      ],
+      "rules": [
+        {
+          "id": "zh-context",
+          "title": "语境先于关键词",
+          "when": "阅读、词句解释及表达题",
+          "principle": "把人物、对象、指代、语气、范围与因果放回文本；命中关键词但否定、对象或关系相反不能算达成。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "zh-reading",
+          "title": "观点—依据—解释分清",
+          "when": "概括、赏析、作用、比较等阅读题",
+          "principle": "按设问区分提取信息、概括关系和解释效果；材料摘录不能自动替代分析，准确概括也不因未逐字复述答案失分。不同有效角度在本题目标内等价认可。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "zh-classical",
+          "title": "文言翻译看语义关系",
+          "when": "文言理解与翻译",
+          "principle": "核对关键实词、虚词、特殊句式、人物关系和省略内容的恢复；准确意译可以得分，不能只按现代译文逐字比对。关键意义反转与一般表达不顺分开处理。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "zh-exact",
+          "title": "精确记忆与理解题分开",
+          "when": "默写、字音字形、背诵或指定引用",
+          "principle": "精确字词确是目标时核对指定文本与允许变体；同音替代不能直接视为正确。阅读理解中的准确转述不套默写规则，固定错字扣分量须有本题依据。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "zh-writing",
+          "title": "写作分维度判断",
+          "when": "作文、片段或实用文写作",
+          "principle": "先看审题、中心与材料，再看组织、表达和任务语体。华丽词汇、篇幅、字迹不能代替内容；立意不同但切题且有依据应公平评价。档位与发展等级只按本次采用的方案。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "zh-errors",
+          "title": "缺陷落到受影响维度",
+          "when": "语病、错别字、格式或局部离题",
+          "principle": "区分内容理解错误、表达不清和规范问题，说明实际影响；不自行累计机械扣分，不将同一缺陷在多个维度重复惩罚。字迹可辨而不美观不等于表达不合格。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "zh-response",
+          "title": "按任务动作判达成",
+          "when": "所有语文题",
+          "principle": "题目要求解释、分析、建议或续写时分别检验动作是否完成；只复述题干或空泛赞美不能替代任务。开放题不按单一价值口号或套话多少定高分。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "小学语文课程；按学校实际课程和题目要求，不预设具体年级",
+          "rules": [
+            {
+              "id": "chinese-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "识字、词句、阅读理解与表达按本题实际目标判断，核对语境和可见内容。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chinese-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "未明确年级时不猜测学习进度，不额外要求高年级修辞术语、篇章结构或作文档位。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "阅读题：意思准确且有材料依据，不强迫照抄参考措辞。"
+        },
+        "primary-1-2": {
+          "course_scope": "常规语文课程",
+          "rules": [
+            {
+              "id": "chinese-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "以识字、词句意思、完整表达和简单阅读信息为主，结合图画、句子与可见内容判断。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chinese-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "短句、口语化但意思明确可达成表达目标；不要求成熟段落结构、修辞术语或复杂主题分析。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "看图写话：人物与事件说清，可与成人范文用词不同。"
+        },
+        "primary-3-4": {
+          "course_scope": "常规语文课程",
+          "rules": [
+            {
+              "id": "chinese-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注段意、事情顺序、人物行为及简单理由，习作检查中心、具体内容和基本连贯。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chinese-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不因没有使用修辞名词否定准确的效果解释；习作真实具体优于堆砌好词。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "阅读作用题：能结合句子说明人物感受，不只找修辞名。"
+        },
+        "primary-5-6": {
+          "course_scope": "常规语文课程",
+          "rules": [
+            {
+              "id": "chinese-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注信息整合、人物或观点依据、叙事详略和实用表达；习作材料是否支持中心。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chinese-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "允许多角度理解，但须有文本支持；不强求高中文学理论、论证深度或高考作文分档。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "人物评价：行为证据与判断相互对应。"
+        },
+        "middle": {
+          "course_scope": "常规语文课程；具体中考规则另取本地本次材料",
+          "rules": [
+            {
+              "id": "chinese-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注语境推断、文学与非连续文本、文言意义、表达效果及较完整的写作组织。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chinese-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "题型模板不能替代具体解释；字数、错字、书写与作文封顶不能套用外省固定值。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "赏析题：手法、具体语句及表达效果按本题目标拆分。"
+        },
+        "high": {
+          "course_scope": "常规语文课程；核对当前课程与卷型",
+          "rules": [
+            {
+              "id": "chinese-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注文本关系、论证与证据、文学解释、文言信息、任务驱动表达及写作思维质量。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chinese-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "有依据的新解不因偏离参考措辞失分；复杂术语和宏大立意不自动换取分析深度分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "论述题：检查论点、材料与推理是否真正连接。"
+        }
+      }
+    },
+    "math": {
+      "name": "数学",
+      "aliases": [
+        "数学"
+      ],
+      "sources": [
+        "CN-MATH-CURR-2020",
+        "INT-MATH-2017",
+        "CN-JX-2025"
+      ],
+      "rules": [
+        {
+          "id": "math-conditions",
+          "title": "对象、条件与定义域先行",
+          "when": "运算、方程、函数、几何、概率统计等任务",
+          "principle": "核对所求量、单位、定义域、图形条件和随机试验模型；公式或定理须满足条件。把结论当条件、漏掉关键限制或混淆对象不能因数值相似视为正确。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "math-method",
+          "title": "方法与结果分别识别",
+          "when": "要求过程的解答与证明题",
+          "principle": "按目标区分建模、变形、关键推理、运算和结论；前面正确的方法分不因后面算错抹去。只写正确结果不自动补齐未呈现的过程分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "math-follow",
+          "title": "沿错须检验独立价值",
+          "when": "早期算错后的后续步骤",
+          "principle": "后续若仍展示独立且适用的方法，可在本题允许的目标内给相应方法分；正确数值、本质条件或待证事实为必要条件的点不能沿错给。不得重复给已经失去的精确结果分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "math-proof",
+          "title": "证明看逻辑有效性",
+          "when": "证明、说明理由或一般性结论",
+          "principle": "检查理由适用、逻辑方向、分类穷尽和结论回扣；循环论证、只举特例和看图猜测不替代一般证明。不同正确证法同等评价，不强迫与参考答案同序。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "math-forms",
+          "title": "等价式与答案集合",
+          "when": "表达式、方程解、集合和图形表示",
+          "principle": "在相同定义域内比较等价性，核对增根、失根、端点、范围与单位；未指定形式时不强制唯一化简外观。近似值与精确值是否等价取决于本题要求。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "math-data",
+          "title": "统计结论守住数据边界",
+          "when": "统计、概率及数据解释",
+          "principle": "区分样本与总体、频数与概率、相关与因果，图表读数、计算和解释分别评价；合理抽样前提或样本空间错误不能靠正确代数掩盖。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "math-result-only",
+          "title": "结果题不强加过程",
+          "when": "选择、填空或明确只评结果的题",
+          "principle": "按所填对象、范围及精度判断结果；答案已准确且未要求解释时，不因无过程扣分。若存在多个空、多个解或条件，按本题实际计分单元处理，不自行拆出过程分。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "小学数学课程；按学校实际课程和题目要求，不预设具体年级",
+          "rules": [
+            {
+              "id": "math-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "数量关系、方法、运算和结论按本题目标分别评价，认可准确图示与等价解法。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "math-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "未明确年级时不强加字母方程或形式证明；深度取决于原题和已给要求。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "应用题：关系图与算式都可表达正确数量关系。"
+        },
+        "primary-1-2": {
+          "course_scope": "常规数学课程",
+          "rules": [
+            {
+              "id": "math-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "数与量、基本运算、位置和图形、简单情境数量关系；用图、实物表示或算式识别思路。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "math-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "允许准确的图示和生活语言，不强求字母方程或形式证明；书写习惯与数学正确性分开。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "应用题：画图表示数量关系，可与参考列式不同。"
+        },
+        "primary-3-4": {
+          "course_scope": "常规数学课程",
+          "rules": [
+            {
+              "id": "math-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "多步数量关系、运算意义、测量与简单统计；看单位及图表含义是否匹配。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "math-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "竖式、口算说明与简便算法可等价；不把尚未要求的代数格式作为得分条件。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "面积题：区分面积与周长，方法正确而乘法算错分别评价。"
+        },
+        "primary-5-6": {
+          "course_scope": "常规数学课程",
+          "rules": [
+            {
+              "id": "math-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "分数小数百分数、比例、空间量与数据解释；关注数量关系和结果的现实意义。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "math-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "算术法、方程法和图示法满足题意即可；不能以初中格式要求否定正确小学解法。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "比例题：先核对对应量，再判比值和单位。"
+        },
+        "middle": {
+          "course_scope": "常规数学课程；具体中考点分按本次细则",
+          "rules": [
+            {
+              "id": "math-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注代数变形条件、方程检验、函数关系、几何推理与统计解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "math-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "明确增根、分类和边界的必要性；解答题与填空题的过程要求不能混用。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "几何证明：有另一条有效定理链同样给对应目标分。"
+        },
+        "high": {
+          "course_scope": "常规数学课程；核对必修、选修与卷型",
+          "rules": [
+            {
+              "id": "math-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注函数与参数范围、逻辑、模型、几何关系、概率及完整论证，关键条件须被实际使用。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "math-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不因方法简短或超出参考路径失分；特值验证不能替代参数的一般性证明。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "参数分类：检查分界值、端点及每类结论是否穷尽。"
+        }
+      }
+    },
+    "english": {
+      "name": "英语",
+      "aliases": [
+        "英语",
+        "英文"
+      ],
+      "sources": [
+        "CN-COMP-2022",
+        "CN-ZJ-ENG-2025",
+        "INT-EN-WRITING"
+      ],
+      "rules": [
+        {
+          "id": "en-task",
+          "title": "交际任务与信息完整性",
+          "when": "英语理解与表达题",
+          "principle": "先确定对象、目的、情境、体裁和信息要点；句子流利不能抵消漏答核心内容或对象错误。准确简洁的表达不因词汇不华丽失分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "en-meaning",
+          "title": "意义等价与精确语言点分开",
+          "when": "阅读回答、听力填空、词形语法及改写",
+          "principle": "内容理解允许准确释义；题目明确测拼写、时态、词形、特定结构或原词时，须满足该语言目标。不能把所有语义相近词都当精确填空的正确答案。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "en-dimensions",
+          "title": "内容、组织与语言分别判断",
+          "when": "英语写作",
+          "principle": "分别判断任务信息、交际适切、连贯组织、词汇语法准确及得体；局部语言错误不抹去已表达清楚的内容点，内容完整也不自动取得语言高档。分值与分档按本题组织。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "en-error-impact",
+          "title": "按错误实际影响评价",
+          "when": "语法、拼写、衔接与用词问题",
+          "principle": "区分妨碍理解、改变意义及一般局部失误，在对应维度评价；不自动按每处错误固定扣分，不重复计算同一缺陷。教师明确只评内容时，只覆盖对应语言评价条款。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "en-continuation",
+          "title": "续写受原文约束",
+          "when": "读后续写或故事补全",
+          "principle": "检查人物、视角、时态线索、情节因果和给定衔接；新增情节可以多样，但不能与原文关键事实矛盾。背诵模板的漂亮句子不能替代合理续接。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "en-evidence",
+          "title": "语言技能证据分离",
+          "when": "听、说、读、写与综合任务",
+          "principle": "阅读答案不能证明听说能力，书面稿不能证明发音、流利度或现场互动。无可用音频或实作证据时只评可见部分并记录限制；不能把证据缺失判作学生技能零分。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "小学英语课程；按学校实际课程和题目要求，不预设具体年级",
+          "rules": [
+            {
+              "id": "english-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "按学校实际英语课程与题目目标评价理解、信息表达及所问语言形式。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "english-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "不假定全国统一起始年级，不因未写复杂句或高级词汇失分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "简单表达：信息完整与语言准确分别判断。"
+        },
+        "primary-1-2": {
+          "course_scope": "仅限学校已开设的英语启蒙任务",
+          "rules": [
+            {
+              "id": "english-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "理解熟悉词语、图意与简单交际，按已教范围关注能否传达基本意思。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "english-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不套中高考作文或完整语法体系；没有录音不能判断发音，不能假定全国小学低年级开设同样英语课程。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "图片词语配对：按目标词义，不外加长句表达要求。"
+        },
+        "primary-3-4": {
+          "course_scope": "按学校实际英语课程与进度",
+          "rules": [
+            {
+              "id": "english-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "熟悉话题的信息理解、常见词句、简单问答和基本书面表达。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "english-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "表达不复杂不等于低水平；词形或拼写仅在该目标或语言维度内评价，不吞掉内容分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "自我介绍：信息准确与句式复杂程度分开。"
+        },
+        "primary-5-6": {
+          "course_scope": "按学校实际英语课程与进度",
+          "rules": [
+            {
+              "id": "english-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "短篇理解、信息整合、简单连贯表达及常用语言的准确运用。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "english-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求高中词汇、复杂从句或成熟论说结构；相同信息可用不同已学句式表达。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "邮件任务：收信对象、目的、要点与基本连贯分别判断。"
+        },
+        "middle": {
+          "course_scope": "常规英语课程；核对当地中考任务",
+          "rules": [
+            {
+              "id": "english-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注语篇信息、推断依据、交际任务、连贯表达及语言准确性。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "english-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "分档、词数、同错重扣和听力答案变体取本次规则；不把四六级或雅思指标直接迁入。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "书面表达：内容到位但时态错，保留内容并评语言影响。"
+        },
+        "high": {
+          "course_scope": "常规英语课程；区分应用文、概要与续写",
+          "rules": [
+            {
+              "id": "english-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注任务适切、语篇组织、准确且有范围的表达；推断及续写须受到文本证据约束。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "english-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "高级词汇不自动加分，简单准确表达可有效；不同写作任务不能共用一张固定档位表。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "续写：检验首句衔接及人物行动是否符合原文。"
+        }
+      }
+    },
+    "physics": {
+      "name": "物理",
+      "aliases": [
+        "物理"
+      ],
+      "sources": [
+        "LOCAL-PHYSICS",
+        "CN-HIGH-2020",
+        "CN-JX-2025"
+      ],
+      "rules": [
+        {
+          "id": "phy-model",
+          "title": "先物理模型后代数",
+          "when": "所有物理题；按本题是否要求过程确定呈现要求",
+          "principle": "核对研究对象、过程区间、初末状态、参考系、方向与变量意义，再判断规律适用。学生未写出的正确模型不能由智能体补写成过程证据；只评结果的题不额外要求模型文字。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "phy-points",
+          "title": "物理关系与计算拆开",
+          "when": "要求计算或解释过程时",
+          "principle": "区分关键规律、关系建立、代入、结果、单位和图示等实际目标。后续算错不抹去此前正确的独立关系；稀疏但对象和过程明确的正确式子可以取得对应分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "phy-wrong-model",
+          "title": "错模型不靠碰对数值补分",
+          "when": "本题要求模型、过程或结果与物理过程一致时",
+          "principle": "错误对象、错误物理过程或不适用规律使依赖它的步骤失效；偶然相同数值不能证明物理理解。独立正确关系只取自身目标分。明确只评结果的选择、填空不反向增设过程门槛。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "phy-algebra",
+          "title": "纯代数省略不额外惩罚",
+          "when": "物理关系、代入含义与目标结果已经清楚时",
+          "principle": "不因省略单纯移项、算术展开或代数化简扣过程分；被省略的若是关键物理关系、约束或过程转换，则不能把它当纯计算步骤补出。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "phy-sign-units",
+          "title": "方向、量纲与结果含义",
+          "when": "含物理量、比例、向量或数值时",
+          "principle": "检查正方向、比值顺序、符号含义、单位换算和结果是否物理可行；等价单位可换算认可。空格已给单位不要求重复写；有效数字、容差与机械缺单位扣分量按本题确定。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "phy-experiment",
+          "title": "实验链条与数据解释",
+          "when": "实验、图像或测量任务",
+          "principle": "区分装置与量程、读数、变量控制、处理关系、误差原因和结论；相关图像特征不自动证明所有机制。已有数据只支持其测量条件，操作文字不能替代实际操作表现。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "phy-alternative",
+          "title": "等价规律须适用同一过程",
+          "when": "存在不同物理方法时",
+          "principle": "运动学、动力学、功能或守恒等路径满足各自条件即可认可；不强制参考解法，不能因写了熟悉公式就忽略守恒条件、系统边界或相互作用。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "仅作为小学科学或综合任务的相关主题参考，不作为小学独立学科入口",
+          "rules": [
+            {
+              "id": "physics-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "关注简单比较、公平条件、测量记录及现象与解释的对应。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "physics-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "不用高中模型完整度要求儿童，但对象搞错、观察与结论相反仍按本题目标判断。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "比较材料导热：比较条件与实际现象分别评价。"
+        },
+        "primary-1-2": {
+          "course_scope": "作为小学科学中的物理主题，不宣称独立开设物理课",
+          "rules": [
+            {
+              "id": "physics-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "观察声音、光、冷热、运动等可见现象，先辨认物体、条件和观察事实。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "physics-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "接受准确生活语言与图示，不强求受力分析、矢量、公式推导或高中物理术语。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "影子观察：区别看到的位置变化与猜测的原因。"
+        },
+        "primary-3-4": {
+          "course_scope": "作为小学科学中的物理主题或已教拓展任务",
+          "rules": [
+            {
+              "id": "physics-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注简单比较、公平条件、测量记录及现象与解释的对应。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "physics-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不用高中模型完整度要求儿童，但对象搞错、观察与结论相反仍按本题目标判断。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "比较材料导热：比较条件与实际现象分别评价。"
+        },
+        "primary-5-6": {
+          "course_scope": "作为小学科学中的物理主题或已教拓展任务",
+          "rules": [
+            {
+              "id": "physics-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注简单系统、变量控制、测量、能量或运动现象的证据解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "physics-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "允许图示和准确通俗解释；不把未要求的代数推导设为默认得分门槛。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "简单电路：连接是否实现任务与解释是否合理分开。"
+        },
+        "middle": {
+          "course_scope": "常规初中物理课程",
+          "rules": [
+            {
+              "id": "physics-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注对象、条件、基本规律、实验测量、物理量对应及单位，过程与结果分别判断。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "physics-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不把高中微积分、复杂矢量或更精细模型强加给初中；符合初中理想化条件的正确方法可用。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "浮力题：先确定浸没体积与受力对象，再评计算。"
+        },
+        "high": {
+          "course_scope": "常规高中物理；原有高中物理阅卷规则直接承接",
+          "rules": [
+            {
+              "id": "physics-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注过程分段、系统边界、守恒条件、方向、临界状态与可核对的物理关系。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "physics-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不把纯代数省略当关键过程缺失；错模型后的代数熟练不能换取依赖该模型的物理过程分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "多过程题：检查每个方程所属对象、区间和初末状态。"
+        }
+      }
+    },
+    "chemistry": {
+      "name": "化学",
+      "aliases": [
+        "化学"
+      ],
+      "sources": [
+        "CN-COMP-2022",
+        "CN-HIGH-2020",
+        "LOCAL-PHYSICS"
+      ],
+      "rules": [
+        {
+          "id": "chem-species",
+          "title": "物质、粒子与条件",
+          "when": "所有化学题",
+          "principle": "核对物质或粒子身份、组成、反应环境及条件；宏观物质、微观粒子、元素与化合物不能混称而不辨意义。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "chem-reaction",
+          "title": "反应表达与守恒",
+          "when": "化学式、方程式、离子或氧化还原任务",
+          "principle": "分别判断反应是否成立、物种、电荷、原子守恒及题目所需条件、状态符号；错误反应不能因配平整齐视为正确。符号缺失的影响落在实际目标内，不自设统一扣分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "chem-calculation",
+          "title": "化学关系先于算术",
+          "when": "化学计算",
+          "principle": "先检验反应关系、计量、限量过量与守恒，再看代入运算和结果；正确独立守恒关系可保留，错反应碰巧算对不能自动得过程全分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "chem-observation",
+          "title": "现象、解释与结论分开",
+          "when": "实验描述和推理",
+          "principle": "可见颜色、气体、沉淀等现象不能用原因替代，原因也不能只复述现象；由现象推物质须检验其他可能性及条件，不能越证据定唯一结论。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "chem-experiment",
+          "title": "操作目的与可行性",
+          "when": "实验设计、鉴别、分离与制备",
+          "principle": "判断试剂选择、操作顺序、干扰排除、对照与可观察信号；安全和规范在任务评价范围内落实，正确口号不能代替具体步骤。未演示的操作熟练度不从文字推断。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "chem-scale",
+          "title": "单位与化学含义",
+          "when": "浓度、质量、体积、物质的量及图表",
+          "principle": "检查量纲、状态条件、分母对象、有效数据和图表阶段；只要化学意义一致的等价表示可认可，精度、单位扣分及近似规则须在本题细则中明确。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "仅作为小学科学或综合任务的相关主题参考，不作为小学独立学科入口",
+          "rules": [
+            {
+              "id": "chemistry-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "关注溶解、混合与变化的条件、观察记录和简单比较。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chemistry-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "按实际证据解释，不要求离子、反应速率或高中计量语言。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "溶解实验：区分看不见了与不存在了。"
+        },
+        "primary-1-2": {
+          "course_scope": "作为小学科学的材料与变化主题",
+          "rules": [
+            {
+              "id": "chemistry-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "辨认材料、描述可见变化及简单分类，区分观察事实与想象原因。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chemistry-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不强求元素符号、分子结构或方程式；不能从现象不足的图片臆断具体产物。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "材料比较：说清观察到的性质即可，不追加化学式要求。"
+        },
+        "primary-3-4": {
+          "course_scope": "作为小学科学中的化学主题或已教拓展",
+          "rules": [
+            {
+              "id": "chemistry-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注溶解、混合与变化的条件、观察记录和简单比较。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chemistry-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "按实际证据解释，不要求离子、反应速率或高中计量语言。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "溶解实验：区分看不见了与不存在了。"
+        },
+        "primary-5-6": {
+          "course_scope": "作为小学科学中的化学主题或已教拓展",
+          "rules": [
+            {
+              "id": "chemistry-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注物质变化证据、可逆操作、简单探究与安全条件。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chemistry-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不以初高中微观机制强制要求小学作答；不能把任一颜色变化都直接判为新物质证明。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "变化判断：说明证据及尚不能确定的内容。"
+        },
+        "middle": {
+          "course_scope": "常规初中化学；按学校实际起始年级",
+          "rules": [
+            {
+              "id": "chemistry-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注物质性质、化学反应、基本守恒、实验操作、现象与简单计量。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chemistry-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "宏观现象与微观解释各有目标；化学式与配平错误不自动让独立实验观察全失分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "制气题：装置、操作、检验和现象分别定位。"
+        },
+        "high": {
+          "course_scope": "常规高中化学",
+          "rules": [
+            {
+              "id": "chemistry-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注结构与性质、反应原理、离子和电子守恒、平衡条件及实验数据解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "chemistry-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不把热力学可行与速率快慢混同；条件改变后的模型适用须重新判断。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "平衡图像：区分速率改变、平衡位置及量的实际变化。"
+        }
+      }
+    },
+    "biology": {
+      "name": "生物学",
+      "aliases": [
+        "生物",
+        "生物学"
+      ],
+      "sources": [
+        "CN-BIO-CURR-2020",
+        "LOCAL-PHYSICS"
+      ],
+      "rules": [
+        {
+          "id": "bio-level",
+          "title": "对象、层次与结构功能",
+          "when": "所有生物题",
+          "principle": "核对分子、细胞、个体、种群、群落或生态系统等所问层次及条件；层次错位、结构与功能混淆不能只凭术语相似给分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "bio-mechanism",
+          "title": "过程机制与术语区分",
+          "when": "解释生命过程或原因",
+          "principle": "关键对象、作用方向、先后关系和因果须成立；堆术语不等于解释机制，科学准确且不含歧义的通俗表达可达成理解目标。题目精确考术语时按该目标判断。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "bio-experiment",
+          "title": "变量—对照—测量—结论",
+          "when": "实验探究",
+          "principle": "识别自变量、因变量、控制条件、对照、样本及测量方式；分别评价设计与结论。处理组有差异不自动排除混杂，不能将相关直接写成因果。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "bio-data",
+          "title": "证据与推断范围",
+          "when": "图表、遗传概率、种群与实验数据",
+          "principle": "图表读数、定量关系、机制解释和结论分开，核对统计对象与前提；数据之外的推断须有论证，不凭常识补出未作答的因果链。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "bio-independent",
+          "title": "保留有效生物关系",
+          "when": "局部概念或计算出错时",
+          "principle": "独立正确的结构功能、变量控制或推理可取得对应目标分；错误遗传模型、对象或调节方向使依赖它的结论不能靠正确算术补足。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "bio-evidence",
+          "title": "不从一次作答推断个体属性",
+          "when": "健康、遗传与行为情境任务",
+          "principle": "只评本题科学知识和可见证据，不诊断学生身体、心理、遗传特征或品行；实作、观察和长期记录不能由一段答案替代。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "仅作为小学科学或综合任务的相关主题参考，不作为小学独立学科入口",
+          "rules": [
+            {
+              "id": "biology-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "关注结构与基本功能、生活条件、简单分类和公平比较。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "biology-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "允许准确生活语言，不把高中微观机制当目标；观察缺失不能直接推定学生不会操作。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "发芽探究：比较条件与记录分别判定。"
+        },
+        "primary-1-2": {
+          "course_scope": "作为小学科学的生命主题",
+          "rules": [
+            {
+              "id": "biology-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "观察生物外部特征、需要与生长变化，准确描述可见现象。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "biology-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求细胞、基因或生理调节术语；拟人化表达只有影响科学意义时才在相应目标处理。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "植物观察：将实际叶片变化与猜测分开。"
+        },
+        "primary-3-4": {
+          "course_scope": "作为小学科学的生命主题",
+          "rules": [
+            {
+              "id": "biology-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注结构与基本功能、生活条件、简单分类和公平比较。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "biology-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "允许准确生活语言，不把高中微观机制当目标；观察缺失不能直接推定学生不会操作。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "发芽探究：比较条件与记录分别判定。"
+        },
+        "primary-5-6": {
+          "course_scope": "作为小学科学的生命主题",
+          "rules": [
+            {
+              "id": "biology-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注生命过程、环境关系、变量控制和基于记录的简单解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "biology-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "可用图与短句解释；不强求正式遗传概率、复杂生化途径或专业统计。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "食物关系：箭头意义与生物关系一致才达成。"
+        },
+        "middle": {
+          "course_scope": "常规初中生物学",
+          "rules": [
+            {
+              "id": "biology-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注结构功能、生命过程、遗传生态基础及实验设计，按所问层次核对科学意义。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "biology-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "准确释义不因未完全照教材句式失分；解剖、显微操作等技能需真实表现证据。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "调节题：对象、变化方向、作用结果分别核验。"
+        },
+        "high": {
+          "course_scope": "常规高中生物学",
+          "rules": [
+            {
+              "id": "biology-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注机制链条、遗传模型、稳态调节、实验推断与证据边界。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "biology-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不将观察到的相关、表达量或表型差异直接扩写为未经支持的唯一机制。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "遗传推断：前提、模型、概率与验证方案分别评价。"
+        }
+      }
+    },
+    "science": {
+      "name": "科学／综合科学",
+      "aliases": [
+        "科学",
+        "小学科学",
+        "综合科学",
+        "理综",
+        "理科综合"
+      ],
+      "sources": [
+        "CN-COMP-2022",
+        "CN-HIGH-2020"
+      ],
+      "rules": [
+        {
+          "id": "sci-domain",
+          "title": "先辨认科学任务所属领域",
+          "when": "所有科学或综合理科任务",
+          "principle": "识别物质、生命、地球宇宙、技术或跨领域目标；涉及明确物理、化学、生物机制时加载对应学科原则，不把理综整卷混为一种固定模板或平均分配维度。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "sci-observation",
+          "title": "观察与推断分开",
+          "when": "观察、记录和解释",
+          "principle": "准确报告实际可见事实，再判断推测是否受到证据支持；预测可以尚未实现，不能把预测当已经观察到的结论，也不因预测未中就抹去合理方法。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "sci-fair",
+          "title": "公平比较与探究链",
+          "when": "探究、测量与实验",
+          "principle": "问题、变量、对照或比较条件、测量记录和结论相连；区分操作设计、数据和解释，各自独立评价。不能只凭“控制变量”等术语取得设计全分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "sci-model",
+          "title": "模型有范围",
+          "when": "图示、分类、模型与科学解释",
+          "principle": "按本学段与本题目标判断模型是否解释现象、是否符合条件；合理简化不等于错误，脱离证据的想象不能代替机制。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "sci-engineering",
+          "title": "工程方案看约束与验证",
+          "when": "制作、设计与技术任务",
+          "principle": "需求、材料、结构、测试和改进分别检查；外观精致不能代替功能，文字方案不能证明实物确已达标。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "sci-communication",
+          "title": "允许适龄科学表达",
+          "when": "所有科学任务",
+          "principle": "接受意义明确的图、表、实物记录和生活语言；精确术语只有在其本身为目标或通俗说法产生科学歧义时才影响对应分。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "小学科学课程；按学校实际课程和题目要求，不预设具体年级",
+          "rules": [
+            {
+              "id": "science-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "观察、比较、记录、证据解释与探究条件按实际任务判断，允许准确图示与生活语言。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "science-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "不猜测具体年级，不强加初高中模型、公式或专业术语；只评可核对的表现。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "探究题：比较条件是否公平与结论是否符合观察分别评价。"
+        },
+        "primary-1-2": {
+          "course_scope": "常规小学科学课程",
+          "rules": [
+            {
+              "id": "science-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "以直接观察、感官描述、分类比较及简单提问为主，图画和口述均可作为适当证据。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "science-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不强求完整实验报告、变量术语、公式或微观机制；教师转述不能代替学生真实表现。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "磁铁观察：记录吸引哪些物体与猜测原因分开。"
+        },
+        "primary-3-4": {
+          "course_scope": "常规小学科学课程",
+          "rules": [
+            {
+              "id": "science-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "围绕可检验问题进行比较、测量、记录与初步解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "science-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求高中式假设检验语言；比较条件确实公平即可，不以是否写出专门术语判全错。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "水温变化：看测量记录与解释是否一致。"
+        },
+        "primary-5-6": {
+          "course_scope": "常规小学科学课程",
+          "rules": [
+            {
+              "id": "science-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注控制变量、证据组织、模型解释、简单工程测试与改进。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "science-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不以复杂术语替代实证，也不强加独立物理化学课程的系统形式要求。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "承重结构：方案、测试记录、改进理由分别评价。"
+        },
+        "middle": {
+          "course_scope": "适用于学校开设的综合科学；分科题同时加载对应规则",
+          "rules": [
+            {
+              "id": "science-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "按所问领域检查概念、变量、证据和解释，明确不同小问是否独立。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "science-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不因整卷名称为科学而忽略各学科差异，数据与量纲等细节按所属学科处理。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "跨领域实验：分别识别生物变量与物理测量条件。"
+        },
+        "high": {
+          "course_scope": "适用于理综及跨学科任务；不能替代分科标准",
+          "rules": [
+            {
+              "id": "science-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "逐小问确定物理、化学、生物或技术目标，分别调用学科规则并连接真正需要的跨领域推理。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "science-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不把一科的结果给分方式或术语要求迁入另一科；不得用理综总分稀释单题依赖错误。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "理综单题：先归属学科，再组织本题采分点。"
+        }
+      }
+    },
+    "history": {
+      "name": "历史",
+      "aliases": [
+        "历史"
+      ],
+      "sources": [
+        "CN-HIST-CURR-2020",
+        "LOCAL-PHYSICS"
+      ],
+      "rules": [
+        {
+          "id": "hist-time",
+          "title": "时空与主体准确",
+          "when": "所有历史题",
+          "principle": "核对时代、地点、主体、制度与事件关系；张冠李戴或时代错置不能因出现名词而达成该点，局部事实错与其他独立判断分开。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "hist-source",
+          "title": "史料信息与来源辨析",
+          "when": "材料、图像和史料任务",
+          "principle": "区分材料直接陈述、作者立场、推断与外部知识；引文真实不代表可无条件证明结论，所问来源、视角或可信性须实际辨析。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "hist-explain",
+          "title": "论点—史实—解释",
+          "when": "原因、影响、评价及论述",
+          "principle": "事实须准确、相关并支持论点；只抄材料或列事件不自动取得解释分，套话不能替代具体历史关系。正确的不同史实例证可以达到相同目标。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "hist-cause",
+          "title": "因果、比较与变化",
+          "when": "因果、异同、变化趋势或评价",
+          "principle": "区分背景、原因、结果与影响，注意时间先后、多重条件和比较维度；先后发生不直接等于因果，同一事实不能换词重复计点。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "hist-open",
+          "title": "开放观点有证据即可",
+          "when": "开放论述或历史解释",
+          "principle": "在史实准确、问题相关和证据充分的条件下接受不同论点与组织路径；不凭立场口号、篇幅或是否复述参考答案决定高低分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "hist-boundary",
+          "title": "不补写学生未作答内容",
+          "when": "所有历史题",
+          "principle": "阅卷者知道的史实不能填入学生缺失的论证，材料出现的信息也不等于学生已分析；价值判断与史实错误分别说明。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "仅作为小学科学或综合任务的相关主题参考，不作为小学独立学科入口",
+          "rules": [
+            {
+              "id": "history-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "关注简单时间关系、人物行为及材料提供的原因或变化。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "history-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "不把现代知识自动当作学生已说明的历史解释，不追加独立历史课程的知识体系。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "老照片比较：描述变化并指出可见依据。"
+        },
+        "primary-1-2": {
+          "course_scope": "作为语文、道法或综合活动的历史主题",
+          "rules": [
+            {
+              "id": "history-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "辨认故事人物、先后顺序与可见材料信息，能说清基本事实。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "history-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不强求专门史观、史料批判术语或高中论文结构；故事感受与史实判断分开。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "历史故事：人物行为与先后顺序不混淆。"
+        },
+        "primary-3-4": {
+          "course_scope": "作为综合课程的历史主题",
+          "rules": [
+            {
+              "id": "history-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注简单时间关系、人物行为及材料提供的原因或变化。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "history-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不把现代知识自动当作学生已说明的历史解释，不追加独立历史课程的知识体系。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "老照片比较：描述变化并指出可见依据。"
+        },
+        "primary-5-6": {
+          "course_scope": "作为综合课程的历史主题或已教拓展",
+          "rules": [
+            {
+              "id": "history-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注时间线、事件联系、材料事实与有根据的简单评价。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "history-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求高中史学概念，允许准确朴素的解释；传说与可核验事实需区分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "事件评价：一个准确事实支持一个相关判断。"
+        },
+        "middle": {
+          "course_scope": "常规初中历史课程",
+          "rules": [
+            {
+              "id": "history-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注基本时空、关键事件、材料提取、比较与因果解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "history-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不按名词数量给论述分；材料依据与解释目标分别判断，超出题意的长段背诵不能凑点。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "影响题：结果与进一步影响不能混写为重复采分。"
+        },
+        "high": {
+          "course_scope": "常规高中历史课程",
+          "rules": [
+            {
+              "id": "history-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注史料视角与互证、特定时空、概念、变化及有证据的历史解释。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "history-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "有依据的多元解释可成立；不能将现代观念直接套回历史情境而省略当时条件。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "史料题：来源立场、材料信息、论证效力分别评价。"
+        }
+      }
+    },
+    "geography": {
+      "name": "地理",
+      "aliases": [
+        "地理"
+      ],
+      "sources": [
+        "CN-COMP-2022",
+        "CN-HIGH-2020",
+        "LOCAL-PHYSICS"
+      ],
+      "rules": [
+        {
+          "id": "geo-space",
+          "title": "位置、尺度与对象",
+          "when": "所有地理题",
+          "principle": "核对区域、空间尺度、时段和所问对象；全球、区域、流域或城市尺度不能随意替换，方向、上下游和季节错误不能只凭术语给分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "geo-map",
+          "title": "图表信息独立判读",
+          "when": "地图、剖面、统计图及影像",
+          "principle": "先读图例、坐标、单位、比例与时空范围，再提取信息；文字常识不能替代题图数据，读数与进一步解释分别评价。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "geo-chain",
+          "title": "要素联系与过程机制",
+          "when": "原因、过程及影响分析",
+          "principle": "把自然与人文要素同题设联系，写清作用方向与中间环节；列出“气候、地形、政策”等名词不等于完成因果链。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "geo-measures",
+          "title": "措施对应问题与条件",
+          "when": "建议、规划、资源环境任务",
+          "principle": "措施须针对题中原因、主体、区域与实施条件，说明可行性或作用；一般正确但不解决当地问题的口号不算本题有效措施。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "geo-systems",
+          "title": "综合与权衡",
+          "when": "区域发展、环境与人地关系",
+          "principle": "区分原因、影响、利弊和尺度，避免单因素包打天下；有条件的不同方案可达成目标，不强制单一参考表述。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "geo-expression",
+          "title": "等价表达仍需空间意义",
+          "when": "简答、绘图及计算",
+          "principle": "准确文字、示意图或合理顺序可认可；关系、方向与数量含义不能因表达简短被脑补，精度和单位按本题目标处理。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "仅作为小学科学或综合任务的相关主题参考，不作为小学独立学科入口",
+          "rules": [
+            {
+              "id": "geography-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "简单地图、天气记录、地方环境与生活联系。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "geography-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "允许生活语言和图示，不能从单日天气推出当地长期气候。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "天气记录：区分当天观察与季节概括。"
+        },
+        "primary-1-2": {
+          "course_scope": "作为科学、道法或生活课程的空间主题",
+          "rules": [
+            {
+              "id": "geography-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "辨认身边位置、方向和简单环境差异，按可见标志描述。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "geography-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求经纬网、环流模型或专业区位术语，不宣称独立小学地理课程。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "路线图：方向与地标关系说清。"
+        },
+        "primary-3-4": {
+          "course_scope": "作为科学与综合课程中的地理主题",
+          "rules": [
+            {
+              "id": "geography-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "简单地图、天气记录、地方环境与生活联系。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "geography-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "允许生活语言和图示，不能从单日天气推出当地长期气候。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "天气记录：区分当天观察与季节概括。"
+        },
+        "primary-5-6": {
+          "course_scope": "作为科学与综合课程中的地理主题",
+          "rules": [
+            {
+              "id": "geography-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注地图尺度、区域比较、自然现象及资源环境的简单联系。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "geography-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求高中多圈层机理；措施要能对应实际问题，不凭环保口号给满分。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "水资源建议：说明本地问题与可做措施的联系。"
+        },
+        "middle": {
+          "course_scope": "常规初中地理课程",
+          "rules": [
+            {
+              "id": "geography-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "地图与区域、自然人文要素、基本过程及人地联系，特别核对图例与空间方向。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "geography-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "区域常识不能替代当题图表；不同区域原因不机械套模板。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "区位题：图中条件和作用理由分别核验。"
+        },
+        "high": {
+          "course_scope": "常规高中地理课程",
+          "rules": [
+            {
+              "id": "geography-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注尺度转换、过程机制、区域综合、人地协调与条件权衡。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "geography-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "单列要素不等于分析；措施与结论须受到特定地区、时段和材料约束。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "河流变化：上游过程、下游效应与时间尺度连接。"
+        }
+      }
+    },
+    "civics": {
+      "name": "道德与法治／思想政治",
+      "aliases": [
+        "道法",
+        "道德与法治",
+        "政治",
+        "思想政治",
+        "品德与社会",
+        "品德与生活"
+      ],
+      "sources": [
+        "CN-COMP-2022",
+        "CN-HIGH-2020",
+        "LOCAL-PHYSICS"
+      ],
+      "rules": [
+        {
+          "id": "civ-material",
+          "title": "先材料后理论标签",
+          "when": "所有道法与思想政治题",
+          "principle": "确认材料事实、主体、情境及设问动作，再调用相关概念；理论名词或口号出现不等于已经应用，答案需解释与材料的实际联系。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "civ-concepts",
+          "title": "概念边界与法律主体",
+          "when": "概念辨析、权利义务与法治任务",
+          "principle": "区分权利义务、个人与机构、规则与法律、事实与价值判断；法律要件及主体混淆不能只凭态度正确给分，现行法律细节有疑问须核实。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "civ-argument",
+          "title": "观点、依据、应用、结论",
+          "when": "辨析、分析及论述",
+          "principle": "判断是否回应具体问题，依据是否相关，推理是否成立；只有立场表态或抄材料不能代替分析，准确朴素表达可优于成套术语。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "civ-action",
+          "title": "建议须可实施",
+          "when": "行动建议、维权和社会参与",
+          "principle": "谁在什么条件下做什么、通过何种合适途径须对应问题；合法合理且适用的替代措施可认可，空泛“提高意识”不能自动当完整行动方案。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "civ-judgment",
+          "title": "评价作答而不贴人身标签",
+          "when": "所有道法与思想政治题",
+          "principle": "只评价概念、材料应用和论证，不从一题观点、措辞或失分推断学生政治身份、品行或家庭；有依据的合题分析不因与参考措辞不同失分。",
+          "authority": "operational-synthesis"
+        },
+        {
+          "id": "civ-current",
+          "title": "时政与法律核对适用时点",
+          "when": "涉及现行政策、法律或时政事实",
+          "principle": "按试题日期、题设和正式材料核对，不将过时说法强行算作当前正确，也不以现今新规则追罚历史情境；政策态度不能替代事实核证。",
+          "authority": "operational-synthesis"
+        }
+      ],
+      "profiles": {
+        "primary": {
+          "course_scope": "小学道德与法治课程；按学校实际课程和题目要求，不预设具体年级",
+          "rules": [
+            {
+              "id": "civics-primary-focus",
+              "title": "本学段评价重点",
+              "when": "小学对应课程或相关主题任务",
+              "principle": "以具体生活情境、规则理由、基本法治意识和可行行动为目标，核对材料与做法的联系。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "civics-primary-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度与证据时",
+              "principle": "未明确年级时不强求高中思想政治理论体系，不按口号多少评价，不据作答贴品行标签。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "生活判断：说清谁可以怎样做以及理由。"
+        },
+        "primary-1-2": {
+          "course_scope": "常规道德与法治课程",
+          "rules": [
+            {
+              "id": "civics-primary-1-2-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "熟悉生活中的规则、需要、感受与具体做法，能描述情境中的恰当行动。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "civics-primary-1-2-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不要求背诵政治法律术语；语言幼稚不等于态度错误，不能据此评价学生品行。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "同伴冲突：能提出安全合理的具体处理办法。"
+        },
+        "primary-3-4": {
+          "course_scope": "常规道德与法治课程",
+          "rules": [
+            {
+              "id": "civics-primary-3-4-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注公共生活、责任、规则理由和尊重他人的实际行动。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "civics-primary-3-4-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不按口号多少给分；日常表达说明规则与情境的联系即可达成对应目标。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "规则题：说明这条规则解决什么实际问题。"
+        },
+        "primary-5-6": {
+          "course_scope": "常规道德与法治课程",
+          "rules": [
+            {
+              "id": "civics-primary-5-6-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注基本法治意识、权利义务、公共责任及有依据的生活判断。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "civics-primary-5-6-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "不强求高中理论体系；建议须适合儿童处境，不编造现实机构权限。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "维权情境：辨认问题与合适求助途径。"
+        },
+        "middle": {
+          "course_scope": "常规道德与法治课程",
+          "rules": [
+            {
+              "id": "civics-middle-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注法律与道德概念、主体责任、材料论证及具体行动。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "civics-middle-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "“态度正确”不等于概念或法律适用正确；法条号不默认必背，除非题目明确测该内容。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "辨析题：分别说明合理部分、错误条件和结论。"
+        },
+        "high": {
+          "course_scope": "常规思想政治课程",
+          "rules": [
+            {
+              "id": "civics-high-focus",
+              "title": "本学段评价重点",
+              "when": "本学段的对应学科或主题任务",
+              "principle": "关注经济、政治、文化、哲学与法治逻辑在具体材料中的准确应用。",
+              "authority": "operational-synthesis"
+            },
+            {
+              "id": "civics-high-boundary",
+              "title": "本学段要求边界",
+              "when": "判断表达、知识深度和证据是否达标时",
+              "principle": "理论与材料须有真实对应，套多个原理不自动多得分；时政事实和规范性主张分开。",
+              "authority": "operational-synthesis"
+            }
+          ],
+          "example": "措施题：明确主体、原理和具体措施之间的联系。"
+        }
+      }
+    }
+  },
+  "stages": [
+    {
+      "id": "primary",
+      "name": "小学",
+      "subjects": [
+        {
+          "code": "chinese",
+          "name": "语文"
+        },
+        {
+          "code": "math",
+          "name": "数学"
+        },
+        {
+          "code": "english",
+          "name": "英语"
+        },
+        {
+          "code": "science",
+          "name": "科学"
+        },
+        {
+          "code": "civics",
+          "name": "道德与法治"
+        }
+      ]
+    },
+    {
+      "id": "middle",
+      "name": "初中",
+      "subjects": [
+        {
+          "code": "chinese",
+          "name": "语文"
+        },
+        {
+          "code": "math",
+          "name": "数学"
+        },
+        {
+          "code": "english",
+          "name": "英语"
+        },
+        {
+          "code": "physics",
+          "name": "物理"
+        },
+        {
+          "code": "chemistry",
+          "name": "化学"
+        },
+        {
+          "code": "biology",
+          "name": "生物学"
+        },
+        {
+          "code": "science",
+          "name": "科学"
+        },
+        {
+          "code": "history",
+          "name": "历史"
+        },
+        {
+          "code": "geography",
+          "name": "地理"
+        },
+        {
+          "code": "civics",
+          "name": "道德与法治"
+        }
+      ]
+    },
+    {
+      "id": "high",
+      "name": "高中",
+      "subjects": [
+        {
+          "code": "chinese",
+          "name": "语文"
+        },
+        {
+          "code": "math",
+          "name": "数学"
+        },
+        {
+          "code": "english",
+          "name": "英语"
+        },
+        {
+          "code": "physics",
+          "name": "物理"
+        },
+        {
+          "code": "chemistry",
+          "name": "化学"
+        },
+        {
+          "code": "biology",
+          "name": "生物学"
+        },
+        {
+          "code": "history",
+          "name": "历史"
+        },
+        {
+          "code": "geography",
+          "name": "地理"
+        },
+        {
+          "code": "civics",
+          "name": "思想政治"
+        }
+      ]
+    }
+  ]
+}

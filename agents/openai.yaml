@@ -1,0 +1,6 @@
+interface:
+  display_name: "K12 智能阅卷"
+  short_description: "教师登录并给题，智能体完成环境配置、多学科评分、报告与经验沉淀"
+  default_prompt: "使用 $k12-ai-grading 开始阅卷，检查环境并打开浏览器，我会亲自登录并提供题目、参考答案和已有规则。"
+policy:
+  allow_implicit_invocation: true
