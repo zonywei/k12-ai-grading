@@ -2,8 +2,6 @@
 
 面向 WorkBuddy 及支持本地 `SKILL.md`、命令执行和 Playwright 的智能体。教师说“开始阅卷”，在弹出的浏览器中亲自登录，提供原题、参考答案和已有评分细则；智能体负责环境配置、逐卷评分、低置信度复核、保存核验及报告。
 
-> 当前部署状态：接收服务已在服务器独立运行；HTTPS域名路由尚待管理端登录和公网验收。公开源码可先使用，自动共享默认关闭。
-
 **服务与下载：[grading.zonywei.com](https://grading.zonywei.com/)** · [下载信息](https://grading.zonywei.com/downloads/latest.json) · [公开源码](https://github.com/zonywei/k12-ai-grading) · [隐私与自愿共享](https://grading.zonywei.com/privacy)
 
 ## 教师开始使用

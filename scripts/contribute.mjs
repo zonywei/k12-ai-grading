@@ -1,30 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import https from "node:https";
-import dns from "node:dns/promises";
-import net from "node:net";
 import { atomic, digest, fail, json } from "./core.mjs";
 import { queuedContributions, contributionBody } from "./experience.mjs";
 import { sharingStatus, queueConsentMatches } from "./sharing.mjs";
 
-export function publicAddress(ip) {
-  if (net.isIPv4(ip)) {
-    const [a, b] = ip.split(".").map(Number);
-    return !(
-      a === 0 ||
-      a === 10 ||
-      a === 127 ||
-      a >= 224 ||
-      (a === 169 && b === 254) ||
-      (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && b === 168) ||
-      (a === 100 && b >= 64 && b <= 127) ||
-      (a === 198 && (b === 18 || b === 19))
-    );
-  }
-  // Only globally routable IPv6 unicast; reject mapped IPv4, ULA and link local.
-  return net.isIPv6(ip) && /^[23][0-9a-f]{3}:/i.test(ip);
-}
+export { publicAddress } from "./network.mjs";
+import { resolveUploadAddresses } from "./network.mjs";
 
 export function validateUploadConfig(config) {
   fail(
@@ -50,14 +32,7 @@ export function validateUploadConfig(config) {
 
 async function post(config, record) {
   const u = validateUploadConfig(config);
-  const host = u.hostname.replace(/^\[|\]$/g, "");
-  const addresses = net.isIP(host)
-    ? [{ address: host, family: net.isIP(host) }]
-    : await dns.lookup(host, { all: true });
-  fail(
-    addresses.length && addresses.every((a) => publicAddress(a.address)),
-    "上传目标不能是本机、内网或保留地址",
-  );
+  const addresses = await resolveUploadAddresses(u);
   const body = JSON.stringify({ key: record.key, ...record.body });
   const token = config.token_env ? process.env[config.token_env] : "";
   if (config.token_env) fail(token, "未找到共建接口的专用凭据");
@@ -100,6 +75,11 @@ async function post(config, record) {
         res.on("error", reject);
       },
     );
+    const deadline = setTimeout(
+      () => req.destroy(new Error("上传超时")),
+      15000,
+    );
+    req.once("close", () => clearTimeout(deadline));
     req.on("timeout", () => req.destroy(new Error("上传超时")));
     req.on("error", reject);
     req.end(body);

@@ -218,6 +218,13 @@ test("规则页经HTTP服务下载时CSP允许学段学科交互", async (t) => 
   const { base, dir } = await service(t);
   fs.mkdirSync(path.join(dir, "downloads"));
   fs.writeFileSync(
+    path.join(dir, "downloads/latest.json"),
+    JSON.stringify({ version: "3.3.0" }),
+  );
+  const home = await (await fetch(base + "/")).text();
+  assert.match(home, /下载 v3.3.0 技能包/);
+  assert.doesNotMatch(home, /npm ci/);
+  fs.writeFileSync(
     path.join(dir, "downloads/K12-default-rules.html"),
     renderRulesHTML(readCatalog()),
   );

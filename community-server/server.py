@@ -189,13 +189,28 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 return self.send(200, {'ok': True, 'service': 'k12-grading-community', 'schema_version': 1, 'notice_version': POLICY['notice_version']})
             except sqlite3.Error:
                 return self.send(503, {'ok': False})
-        if route in {'/', '/privacy'}:
-            file = ROOT / ('PRIVACY.md' if route == '/privacy' else 'README.md')
-            # Escaped local documentation; no dynamic user input.
+        if route == '/':
+            version = '当前版本'
+            link = '/downloads/latest.json'
+            if self.server.downloads:
+                latest = self.server.downloads / 'latest.json'
+                try:
+                    value = json.loads(latest.read_text())['version']
+                    if re.fullmatch(r'[1-9]\d{0,2}\.\d{1,3}\.\d{1,3}', value):
+                        version = 'v' + value
+                        link = '/downloads/k12-ai-grading-v' + value + '.zip'
+                except (OSError, ValueError, TypeError, KeyError):
+                    pass
+            page = (ROOT / 'community-server/home.html').read_text(encoding='utf-8')
+            return self.send(200, page.replace('__VERSION__', version).replace('__DOWNLOAD_URL__', link), 'text/html; charset=utf-8')
+        if route == '/privacy':
             import html
-            text = html.escape(file.read_text(encoding='utf-8')) if file.exists() else 'K12智能阅卷共建服务'
-            title = '隐私与自愿共享说明' if route == '/privacy' else 'K12智能阅卷'
-            page = f'<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title><style>body{{max-width:840px;margin:40px auto;padding:0 24px;font:17px/1.75 system-ui;color:#24352b}}a{{color:#276044}}pre{{white-space:pre-wrap;font:inherit}}nav{{margin-bottom:24px}}</style><nav><a href="/">技能说明</a> · <a href="/privacy">隐私说明</a> · <a href="https://github.com/zonywei/k12-ai-grading">公开源码</a> · <a href="/downloads/latest.json">下载信息</a></nav><h1>{title}</h1><pre>{text}</pre></html>'
+            blocks = []
+            for block in (ROOT / 'PRIVACY.md').read_text(encoding='utf-8').split('\n\n'):
+                if block.startswith('# '):
+                    continue
+                blocks.append('<h2>' + html.escape(block[3:]) + '</h2>' if block.startswith('## ') else '<p>' + html.escape(block) + '</p>')
+            page = '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>隐私与自愿共享说明</title><style>body{max-width:820px;margin:40px auto;padding:0 24px;font:17px/1.8 system-ui;color:#26382d}h1{font-size:31px}h2{font-size:23px;margin-top:32px}p{overflow-wrap:anywhere}a{color:#315f43}</style><nav><a href="/">返回技能首页</a> · <a href="https://github.com/zonywei/k12-ai-grading">公开源码</a></nav><h1>隐私与自愿共享说明</h1>' + ''.join(blocks) + '</html>'
             return self.send(200, page, 'text/html; charset=utf-8')
         if route.startswith('/downloads/') and self.server.downloads:
             name = route.removeprefix('/downloads/')

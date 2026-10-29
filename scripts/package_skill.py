@@ -9,7 +9,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 TOP = {'SKILL.md', 'package.json', 'package-lock.json', 'requirements.txt', '使用说明.txt', 'README.md', 'PRIVACY.md', 'CONTRIBUTING.md', 'LICENSE', 'CHANGELOG.md'}
 DIRS = {'agents', 'scripts', 'references', 'templates', 'tests', 'community-server'}
-EXTENSIONS = {'.md', '.json', '.yaml', '.yml', '.mjs', '.py', '.txt', '.service'}
+EXTENSIONS = {'.md', '.json', '.yaml', '.yml', '.mjs', '.py', '.txt', '.service', '.html'}
 
 
 def package(output):
