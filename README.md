@@ -4,6 +4,12 @@
 
 **服务与下载：[grading.zonywei.com](https://grading.zonywei.com/)** · [下载信息](https://grading.zonywei.com/downloads/latest.json) · [公开源码](https://github.com/zonywei/k12-ai-grading) · [隐私与自愿共享](https://grading.zonywei.com/privacy)
 
+## 效果示例（合成示例数据）
+
+![评分细则](docs/images/k12-ai-grading-1.png)
+
+![逐点判定结果](docs/images/k12-ai-grading-2.png)
+
 ## 教师开始使用
 
 1. 下载 `k12-ai-grading` 技能ZIP，在宿主的本地技能导入入口导入；若宿主使用技能目录，将解压后的 `k12-ai-grading` 文件夹放入其技能目录，使宿主能找到 `SKILL.md`。目录位置以宿主实际设置为准。
